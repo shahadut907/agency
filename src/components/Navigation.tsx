@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function Navigation() {
@@ -17,97 +17,135 @@ export default function Navigation() {
     ];
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2">
-                        <div className="flex items-center">
-                            <div className="w-2 h-2 bg-primary rounded-full mr-1"></div>
-                            <div className="w-2 h-2 bg-primary/60 rounded-full mr-1"></div>
-                            <div className="w-2 h-2 bg-primary/30 rounded-full"></div>
-                        </div>
-                        <span className="text-xl font-bold text-foreground ml-2">Nebula</span>
-                    </Link>
+        <>
+            {/* Floating Pill Navigation - Desktop */}
+            <motion.nav
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden md:block"
+            >
+                <div className="relative">
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
 
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                        <Link href="#signin" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                            Sign In
+                    {/* Main navbar pill */}
+                    <div className="relative flex items-center gap-1 px-3 py-2.5 rounded-full bg-card/80 backdrop-blur-xl border border-border/50 shadow-2xl">
+                        {/* Logo */}
+                        <Link href="/" className="flex items-center gap-2 px-3 py-1.5">
+                            <div className="flex items-center gap-1">
+                                <div className="w-1.5 h-1.5 bg-primary rounded-full" />
+                                <div className="w-1.5 h-1.5 bg-primary/60 rounded-full" />
+                                <div className="w-1.5 h-1.5 bg-primary/30 rounded-full" />
+                            </div>
+                            <span className="text-sm font-semibold text-foreground">Nebula</span>
                         </Link>
+
+                        {/* Divider */}
+                        <div className="w-px h-5 bg-border/50" />
+
+                        {/* Nav Links */}
+                        <div className="flex items-center gap-1 px-2">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted/50"
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                            <Link
+                                href="#signin"
+                                className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-muted/50"
+                            >
+                                Sign In
+                            </Link>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="w-px h-5 bg-border/50" />
+
+                        {/* CTA Button */}
                         <Button
-                            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
+                            size="sm"
+                            className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 rounded-full px-4 py-1.5 h-auto text-sm font-medium group"
                             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                         >
                             REQUEST DEMO
-                            <svg
-                                className="ml-2 w-4 h-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
+                            <ArrowRight className="ml-1.5 w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </Button>
                     </div>
-
-                    {/* Mobile menu button */}
-                    <button
-                        className="md:hidden p-2 text-foreground"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
                 </div>
-            </div>
+            </motion.nav>
 
             {/* Mobile Navigation */}
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="md:hidden bg-card border-t border-border"
-                >
-                    <div className="px-4 py-4 space-y-3">
-                        {navLinks.map((link) => (
+            <nav className="fixed top-0 left-0 right-0 z-50 md:hidden bg-background/95 backdrop-blur-xl border-b border-border/50">
+                <div className="container mx-auto px-4">
+                    <div className="flex items-center justify-between h-16">
+                        {/* Logo */}
+                        <Link href="/" className="flex items-center gap-2">
+                            <div className="flex items-center gap-1">
+                                <div className="w-2 h-2 bg-primary rounded-full" />
+                                <div className="w-2 h-2 bg-primary/60 rounded-full" />
+                                <div className="w-2 h-2 bg-primary/30 rounded-full" />
+                            </div>
+                            <span className="text-lg font-bold text-foreground">Nebula</span>
+                        </Link>
+
+                        {/* Mobile menu button */}
+                        <button
+                            className="p-2 text-foreground hover:bg-muted/50 rounded-lg transition-colors"
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            {isOpen ? <X size={22} /> : <Menu size={22} />}
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile Menu Dropdown */}
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="border-t border-border/50 bg-background/95 backdrop-blur-xl"
+                    >
+                        <div className="container mx-auto px-4 py-4 space-y-1">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
                             <Link
-                                key={link.href}
-                                href={link.href}
-                                className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                                href="#signin"
+                                className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-colors"
                                 onClick={() => setIsOpen(false)}
                             >
-                                {link.label}
+                                Sign In
                             </Link>
-                        ))}
-                        <Link
-                            href="#signin"
-                            className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            Sign In
-                        </Link>
-                        <Button
-                            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                            onClick={() => {
-                                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                                setIsOpen(false);
-                            }}
-                        >
-                            REQUEST DEMO
-                        </Button>
-                    </div>
-                </motion.div>
-            )}
-        </nav>
+                            <div className="pt-2">
+                                <Button
+                                    className="w-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25"
+                                    onClick={() => {
+                                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                                        setIsOpen(false);
+                                    }}
+                                >
+                                    REQUEST DEMO
+                                    <ArrowRight className="ml-2 w-4 h-4" />
+                                </Button>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </nav>
+        </>
     );
 }
