@@ -16,22 +16,38 @@ export default function HeroSection() {
 
             {/* Subtle Floating Particles */}
             <div className="absolute inset-0 overflow-hidden">
-                {[...Array(15)].map((_, i) => (
+                {[
+                    { left: 15, top: 25, duration: 5.2, delay: 0.3 },
+                    { left: 85, top: 15, duration: 6.1, delay: 1.2 },
+                    { left: 45, top: 65, duration: 4.8, delay: 0.7 },
+                    { left: 72, top: 45, duration: 5.5, delay: 1.5 },
+                    { left: 28, top: 82, duration: 6.3, delay: 0.5 },
+                    { left: 92, top: 58, duration: 4.9, delay: 1.8 },
+                    { left: 8, top: 48, duration: 5.7, delay: 0.9 },
+                    { left: 58, top: 22, duration: 6.5, delay: 1.1 },
+                    { left: 35, top: 92, duration: 5.1, delay: 0.4 },
+                    { left: 68, top: 72, duration: 6.2, delay: 1.6 },
+                    { left: 12, top: 38, duration: 4.7, delay: 0.8 },
+                    { left: 78, top: 88, duration: 5.9, delay: 1.4 },
+                    { left: 52, top: 12, duration: 5.3, delay: 0.6 },
+                    { left: 88, top: 35, duration: 6.4, delay: 1.7 },
+                    { left: 22, top: 55, duration: 4.6, delay: 1.0 },
+                ].map((particle, i) => (
                     <motion.div
                         key={i}
                         className="absolute w-1 h-1 bg-primary/20 rounded-full"
                         style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
+                            left: `${particle.left}%`,
+                            top: `${particle.top}%`,
                         }}
                         animate={{
                             y: [0, -20, 0],
                             opacity: [0.1, 0.3, 0.1],
                         }}
                         transition={{
-                            duration: 4 + Math.random() * 3,
+                            duration: particle.duration,
                             repeat: Infinity,
-                            delay: Math.random() * 2,
+                            delay: particle.delay,
                             ease: 'easeInOut',
                         }}
                     />
@@ -78,7 +94,7 @@ export default function HeroSection() {
                         className="text-lg sm:text-xl text-muted-foreground/90 mb-12 max-w-2xl mx-auto leading-relaxed font-normal"
                     >
                         Enterprise-grade AI agents and automation solutions. Build custom AI workflows
-                        and autonomous business systems on one unified platform.
+                        and autonomous business systems on one unified platform. By shahadat hossen
                     </motion.p>
 
                     {/* Premium CTA Buttons */}
@@ -119,7 +135,7 @@ export default function HeroSection() {
                                     <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border-2 border-background"></div>
                                 ))}
                             </div>
-                            <span>Trusted by 500+ companies</span>
+                            <span>Trusted by many companies</span>
                         </div>
                         <div className="h-4 w-px bg-border/50"></div>
                         <div className="flex items-center gap-1.5">
@@ -130,7 +146,7 @@ export default function HeroSection() {
                                     </svg>
                                 ))}
                             </div>
-                            <span>4.9/5 rating</span>
+                            <span>4.5/5 rating</span>
                         </div>
                     </motion.div>
 

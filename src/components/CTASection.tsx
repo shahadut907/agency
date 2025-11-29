@@ -24,18 +24,31 @@ export default function CTASection() {
         e.preventDefault();
         setIsSubmitting(true);
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-        console.log('Form submitted:', formData);
-        setIsSubmitting(false);
-        setIsSubmitted(true);
+            if (!response.ok) {
+                throw new Error('Failed to submit');
+            }
 
-        // Reset form after 3 seconds
-        setTimeout(() => {
-            setFormData({ name: '', email: '', company: '', message: '' });
-            setIsSubmitted(false);
-        }, 3000);
+            setIsSubmitting(false);
+            setIsSubmitted(true);
+
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                setFormData({ name: '', email: '', company: '', message: '' });
+                setIsSubmitted(false);
+            }, 3000);
+        } catch (error) {
+            console.error(error);
+            setIsSubmitting(false);
+        }
     };
 
     return (
